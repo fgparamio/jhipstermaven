@@ -14,4 +14,4 @@ dependencies:
 test:
   override:
     - mvn test
-    - grunt test
+#   - grunt test
