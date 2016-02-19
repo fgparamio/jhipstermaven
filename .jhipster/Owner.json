@@ -1,0 +1,28 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "car",
+            "otherEntityName": "car",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "owner"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "surname",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160219112216",
+    "dto": "no",
+    "service": "no",
+    "pagination": "pager"
+}
