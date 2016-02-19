@@ -68,7 +68,7 @@ module.exports = function (config) {
         },
 
         // web server port
-        port: 9876,
+        port: 9877,
 
         // level of logging
         // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
@@ -89,11 +89,11 @@ module.exports = function (config) {
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: true,
+        singleRun: false,
 
         // to avoid DISCONNECTED messages when connecting to slow virtual machines
-        browserDisconnectTimeout : 200000, // default 2000
+        browserDisconnectTimeout : 20000, // default 2000
         browserDisconnectTolerance : 5, // default 0
-        browserNoActivityTimeout : 4*60*100000 //default 10000
+        browserNoActivityTimeout : 4*60*20000 //default 10000
     });
 };
