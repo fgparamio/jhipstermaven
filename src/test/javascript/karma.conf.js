@@ -40,6 +40,7 @@ module.exports = function (config) {
             'main/webapp/scripts/components/**/*.+(js|html)',
             'test/javascript/spec/helpers/module.js',
             'test/javascript/spec/helpers/httpBackend.js',
+	    'test/javascript/spec/app/**/*.js',
             'test/javascript/**/!(karma.conf).js'
         ],
 
@@ -91,8 +92,8 @@ module.exports = function (config) {
         singleRun: false,
 
         // to avoid DISCONNECTED messages when connecting to slow virtual machines
-        browserDisconnectTimeout : 10000, // default 2000
+        browserDisconnectTimeout : 20000, // default 2000
         browserDisconnectTolerance : 1, // default 0
-        browserNoActivityTimeout : 4*60*1000 //default 10000
+        browserNoActivityTimeout : 4*60*10000 //default 10000
     });
 };
