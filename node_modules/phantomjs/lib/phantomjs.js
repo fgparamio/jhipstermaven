@@ -26,7 +26,7 @@ try {
  * The version of phantomjs installed by this package.
  * @type {number}
  */
-exports.version = '2.1.1'
+exports.version = '1.9.8'
 
 
 /**
