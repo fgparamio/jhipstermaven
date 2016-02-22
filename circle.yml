@@ -13,5 +13,11 @@ dependencies:
     - bower install
 test:
   override:
-          #    - mvn test
+    - mvn test
     - grunt test
+
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: jhipstermaven
