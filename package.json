@@ -51,7 +51,7 @@
     "karma-script-launcher": "0.1.0",
     "load-grunt-tasks": "3.3.0",
     "lodash": "3.10.1",
-    "phantomjs": "^2.0.0",
+    "phantomjs": "^1.9.8",
     "phantomjs-prebuilt": "^2.0.0",
     "requirejs": "2.1",
     "time-grunt": "1.2.2",
