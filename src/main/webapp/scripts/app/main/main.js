@@ -1,25 +1,27 @@
 'use strict';
 
-angular.module('jhipstermavenApp')
-    .config(function ($stateProvider) {
-        $stateProvider
-            .state('home', {
-                parent: 'site',
-                url: '/',
-                data: {
-                    authorities: []
-                },
-                views: {
-                    'content@': {
-                        templateUrl: 'scripts/app/main/main.html',
-                        controller: 'MainController'
-                    }
-                },
-                resolve: {
-                    mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
-                        $translatePartialLoader.addPart('main');
-                        return $translate.refresh();
-                    }]
-                }
-            });
-    });
+var app = angular.module('jhipstermavenApp').config(
+		function($stateProvider) {
+			
+			$stateProvider.state('home', {
+				parent : 'site',
+				url : '/',
+				data : {
+					authorities : []
+				},
+				views : {
+					'content@' : {
+						templateUrl : 'scripts/app/main/main.html',
+						controller : 'MainController'
+					}
+				},
+				resolve : {
+					mainTranslatePartialLoader : [ '$translate',
+							'$translatePartialLoader',
+							function($translate, $translatePartialLoader) {
+								$translatePartialLoader.addPart('main');
+								return $translate.refresh();
+							} ]
+				}
+			});
+		});
