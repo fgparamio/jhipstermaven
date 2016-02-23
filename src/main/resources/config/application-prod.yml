@@ -19,14 +19,14 @@ spring:
         livereload:
             enabled: false
     datasource:
-        driver-class-name: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
-        url: jdbc:mysql://localhost:3306/JHipsterMaven?useUnicode=true&characterEncoding=utf8
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://ec2-79-125-118-3.eu-west-1.compute.amazonaws.com:5432/d7re5sclfapaj3?sslmode=verify-full
         name:
-        username: root
-        password:
+        username: hxapqbslqizfiq
+        password: oNB3TM3pZ_xH-nu_sor40f0JHa
     jpa:
-        database-platform: org.hibernate.dialect.MySQLInnoDBDialect
-        database: MYSQL
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        database: POSTGRESQL
         show_sql: false
         properties:
             hibernate.cache.use_second_level_cache: true
