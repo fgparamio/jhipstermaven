@@ -16,8 +16,8 @@ test:
     - mvn test
     - grunt test
 
-deployment:
-  staging:
-    branch: master
-    heroku:
-      appname: boiling-fjord-59940
+# deployment:
+#   staging:
+#     branch: master
+#     heroku:
+#       appname: jhipstermaven
