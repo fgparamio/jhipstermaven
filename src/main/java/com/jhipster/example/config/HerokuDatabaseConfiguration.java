@@ -1,56 +1,69 @@
 package com.jhipster.example.config;
 
-import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.bind.RelaxedPropertyResolver;
+import org.springframework.context.ApplicationContextException;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
+
+import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 
 @Configuration
 @Profile(Constants.SPRING_PROFILE_HEROKU)
-public class HerokuDatabaseConfiguration {
+public class HerokuDatabaseConfiguration implements EnvironmentAware {
 
     private final Logger log = LoggerFactory.getLogger(HerokuDatabaseConfiguration.class);
 
+    private RelaxedPropertyResolver propertyResolver;
+
+    private Environment environment;
+
+    @Override
+    public void setEnvironment(Environment environment) {
+      this.environment = environment;
+      this.propertyResolver = new RelaxedPropertyResolver(environment, "spring.datasource.");
+    }
+
     @Bean
-    public DataSource dataSource(DataSourceProperties dataSourceProperties, JHipsterProperties jHipsterProperties) {
-        log.debug("Configuring Heroku Datasource");
+    public DataSource dataSource() {
+      log.debug("Configuring Heroku Datasource");
 
-//        String herokuUrl = System.getenv("JDBC_DATABASE_URL");
-//        if (herokuUrl != null) {
-//	    HikariConfig config = new HikariConfig();
-//
-//	    //MySQL optimizations, see https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration
-//	    if ("com.mysql.jdbc.jdbc2.optional.MysqlDataSource".equals(dataSourceProperties.getDriverClassName())) {
-//                config.addDataSourceProperty("cachePrepStmts", jHipsterProperties.getDatasource().isCachePrepStmts());
-//                config.addDataSourceProperty("prepStmtCacheSize", jHipsterProperties.getDatasource().getPrepStmtCacheSize());
-//                config.addDataSourceProperty("prepStmtCacheSqlLimit", jHipsterProperties.getDatasource().getPrepStmtCacheSqlLimit());
-//            }
-//
-//            config.setDataSourceClassName(dataSourceProperties.getDriverClassName());
-//            config.addDataSourceProperty("url", herokuUrl);
-//            return new HikariDataSource(config);
-//        } else {
-//            throw new ApplicationContextException("Heroku database URL is not configured, you must set $JDBC_DATABASE_URL");
-//        }
-//        
-        
-        
-        String dbUrl = "jdbc:postgresql://ec2-79-125-118-3.eu-west-1.compute.amazonaws.com:5432/d7re5sclfapaj3?sslmode=verify-full";
-        String username = "hxapqbslqizfiq";
-        String password = "oNB3TM3pZ_xH-nu_sor40f0JHa";
+      String herokuUrl = propertyResolver.getProperty("heroku-url");
+      if (herokuUrl != null) {
+        log.info("Using Heroku, parsing their $DATABASE_URL to use it with JDBC");
+        URI dbUri = null;
+        try {
+          dbUri = new URI(herokuUrl);
+        } catch (URISyntaxException e) {
+          throw new ApplicationContextException("Heroku database connection pool is not configured correctly");
+        }
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" +
+        dbUri.getHost() +
+        ':' +
+        dbUri.getPort() +
+        dbUri.getPath() +
+        "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
 
-        BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl(dbUrl);
-        basicDataSource.setUsername(username);
-        basicDataSource.setPassword(password);
-
-        return basicDataSource;
-        
-       
+        HikariConfig config = new HikariConfig();
+        config.setDataSourceClassName(propertyResolver.getProperty("dataSourceClassName"));
+        config.addDataSourceProperty("url", dbUrl);
+        config.addDataSourceProperty("user", username);
+        config.addDataSourceProperty("password", password);
+        return new HikariDataSource(config);
+      } else {
+        throw new ApplicationContextException("Heroku database URL is not configured, you must set --spring.datasource.heroku-url=$DATABASE_URL");
+      }
     }
 }

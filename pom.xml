@@ -61,23 +61,16 @@
 		<sonar.tests>${project.basedir}/src/test/</sonar.tests>
 		<spring-security.version>4.0.2.RELEASE</spring-security.version>
 		<springfox.version>2.0.3</springfox.version>
+ 	 	<postgresql.version>9.3-1102-jdbc41</postgresql.version>
 	</properties>
 
 	<dependencies>
 
 		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.1-901-1.jdbc4</version>
+			  <groupId>org.postgresql</groupId>
+			  <artifactId>postgresql</artifactId>
+			  <version>${postgresql.version}</version>
 		</dependency>
-
-
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-hibernate4</artifactId>
