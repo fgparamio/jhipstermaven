@@ -1,7 +1,7 @@
 {
     "main": {
-        "title": "Welcome, Java Hipster!",
-        "subtitle": "This is your homepage",
+        "title": "LDA TIMPLE Agile SW Java Hipster!",
+        "subtitle": "This is your LDA TIMPLE homepage",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."
         },
